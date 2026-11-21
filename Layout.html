@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /> <!-- Unicode Transformation Format- 8 bytes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IGDTUW Academic Hub</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- VIEW 1: FRONT LOGIN SCREEN (Shown Initially) -->
+  <div id="loginScreen" class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo-icon-lg"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h1>IGDTUW Academic Hub</h1>
+        <p class="subtitle">1st Year Student Productivity Portal</p>
+      </div>
+
+      <form id="loginForm" class="profile-form">
+        <div class="form-group">
+          <label for="studentName">FULL NAME</label>
+          <input type="text" id="studentName" placeholder="e.g. Ananya Sharma" autocomplete="off" required />
+        </div>
+
+        <div class="form-group">
+          <label for="enrollmentNo">ENROLLMENT NUMBER (11 DIGITS)</label>
+          <input 
+          type="text" id="enrollmentNo" inputmode="numeric" 
+          pattern="\d{11}" maxlength="11" minlength="11"
+          placeholder="e.g. 04201012026" 
+          title="Enrollment number must be exactly 11 digits"
+          autocomplete="off" required />
+        </div>
+
+        <div class="form-group">
+          <label for="studentPassword">PASSWORD</label>
+          <input type="password" id="studentPassword" placeholder="Enter your password" required />
+        </div>
+
+        <button type="submit" class="btn-primary w-full">Sign In to Portal</button>
+      </form>
+
+      <div class="login-footer">
+        <button class="theme-toggle-btn" id="loginThemeToggle">
+          <span class="icon">🌙</span> Dark Mode
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 2: MAIN ACADEMIC DASHBOARD (Shown After Login) -->
+  <div id="dashboardScreen" class="app-container hidden">
+    
+    <!-- Header -->
+    <header class="header">
+      <div class="header-title">
+        <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div>
+          <h1>IGDTUW Academic Hub</h1>
+          <p class="subtitle" id="welcomeUserText">Welcome, Student</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn">
+          <span class="icon">🌙</span> Dark Mode
+        </button>
+        <button class="btn-logout" id="logoutBtn">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- Widget 1: Daily Inspiration Banner -->
+    <section class="banner-widget">
+      <div class="banner-badge">DAILY INSPIRATION</div>
+      <h2 class="quote-text" id="quoteText">"Loading your daily motivation..."</h2>
+      <p class="quote-author" id="quoteAuthor">— Loading</p>
+    </section>
+
+    <!-- Widget 2: Tab Navigation (Profile removed, 3 Core Widgets) -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="attendance">
+        <i class="fa-solid fa-chart-column"></i> Attendance
+      </button>
+      <button class="tab-btn" data-tab="notes">
+        <i class="fa-solid fa-book-bookmark"></i> Notes Vault
+      </button>
+      <button class="tab-btn" data-tab="todo">
+        <i class="fa-solid fa-list-check"></i> To-Do List
+      </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+      
+      <!-- TAB 1: Attendance Tracker View -->
+      <section id="attendance" class="tab-content active">
+        <div class="card widget-card">
+          <div class="section-header-row">
+            <h3 class="card-title"><i class="fa-solid fa-chart-column text-accent"></i> Attendance Tracker</h3>
+            <div class="overall-badge" id="overallAttendance">Overall: 0.0%</div>
+          </div>
+
+          <form id="addSubjectForm" class="inline-form">
+            <input type="text" id="subjectName" placeholder="Subject Name (e.g. Applied Physics)" required />
+            <input type="number" id="attendedClasses" placeholder="Attended" min="0" required />
+            <input type="number" id="totalClasses" placeholder="Total Held" min="1" required />
+            <button type="submit" class="btn-primary">Add Subject</button>
+          </form>
+
+          <div id="subjectList" class="widget-list"></div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Notes Vault View -->
+      <section id="notes" class="tab-content">
+        <div class="card widget-card">
+          <h3 class="card-title"><i class="fa-solid fa-book-bookmark text-accent"></i> Notes Vault</h3>
+          
+          <form id="addNoteForm" class="form-stack">
+            <div class="form-row-2col">
+              <input type="text" id="noteTitle" placeholder="Note Title (e.g. Unit 2 Chemistry)" required />
+              <input type="text" id="noteSubject" placeholder="Subject / Tag" required />
+            </div>
+            <textarea id="noteContent" placeholder="Write or paste your study notes here..." rows="3" required></textarea>
+            <button type="submit" class="btn-primary">Save Note</button>
+          </form>
+
+          <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="searchNotes" placeholder="Search saved notes..." />
+          </div>
+
+          <div id="notesGrid" class="notes-grid"></div>
+        </div>
+      </section>
+
+      <!-- TAB 3: To-Do List View -->
+      <section id="todo" class="tab-content">
+        <div class="card widget-card">
+          <h3 class="card-title"><i class="fa-solid fa-list-check text-accent"></i> Daily To-Do List</h3>
+          
+          <form id="addTodoForm" class="inline-form">
+            <input type="text" id="todoInput" placeholder="Add a new assignment or task..." required />
+            <button type="submit" class="btn-primary">Add Task</button>
+          </form>
+
+          <div class="filter-tabs">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+          </div>
+
+          <ul id="todoList" class="todo-list"></ul>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
